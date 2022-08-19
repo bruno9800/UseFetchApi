@@ -1,36 +1,13 @@
-import './App.css'
-import { useFetch } from './hooks/useFetch'
+import { Route, Routes } from "react-router-dom";
+import { Repo } from "./pages/Repo";
+import { Repos } from "./pages/Repos";
 
-interface Repository {
-  full_name: string,
-  description: string
-}
 
-function App() {
-  const base_url = 'https://api.github.com/users/bruno9800/repos'
-  const { data: repositories , isFetching} = useFetch<Repository[]>(base_url)
-
+export function App() {
   return (
-    <div>
-      <h1>First project in linux</h1>
-
-      <ul>
-        { isFetching && <p>Carregando...</p>}
-        {
-          repositories?.map(repo => {
-            return(
-              <li key={repo.full_name}>
-                <strong>{repo.full_name}</strong>
-                <p>{repo.description}</p>
-              </li>
-            )
-          })
-        }
-      </ul>
-      
-
-    </div>
+    <Routes>
+      <Route path="/" element={<Repos/>} />
+      <Route path="/repos/*" element={<Repo/>} />
+    </Routes>
   )
 }
-
-export default App
